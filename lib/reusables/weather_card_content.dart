@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:simple_weather_application/models/tomorrow_weather.dart';
 import 'package:weather/weather.dart';
 import 'weather_icon.dart';
 import 'weather_details.dart';
 
 class WeatherCardContent extends StatelessWidget {
-  final Weather weather;
+  final TomorrowWeather weather;
   final bool isCurrentDay;
   final int index;
 
@@ -15,6 +16,20 @@ class WeatherCardContent extends StatelessWidget {
     required this.isCurrentDay,
     required this.index,
   }) : super(key: key);
+
+  String _getWeatherDescription(String code) {
+    switch (code) {
+      case '1000': return 'CLEAR';
+      case '1100': return 'MOSTLY CLEAR';
+      case '1101': return 'PARTLY CLOUDY';
+      case '1102': return 'MOSTLY CLOUDY';
+      case '1001': return 'CLOUDY';
+      case '4000': return 'RAIN';
+      case '4001': return 'LIGHT RAIN';
+      case '4200': return 'SNOW';
+      default: return 'CLEAR';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,13 +64,13 @@ class WeatherCardContent extends StatelessWidget {
                     ],
                   ),
                 ),
-                WeatherIcon(code: weather.weatherConditionCode!),
+                WeatherIcon(code: weather.weatherCode),
               ],
             ),
             const SizedBox(height: 20),
             Center(
               child: Text(
-                '${weather.temperature!.celsius!.round()}°C',
+                '${weather.temperature.toStringAsFixed(1)}°C',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: isCurrentDay ? 72 : 60,
@@ -65,7 +80,7 @@ class WeatherCardContent extends StatelessWidget {
             ),
             Center(
               child: Text(
-                weather.weatherMain!.toUpperCase(),
+                _getWeatherDescription(weather.weatherCode),
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: isCurrentDay ? 24 : 20,
@@ -73,7 +88,13 @@ class WeatherCardContent extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            WeatherDetails(weather: weather, index: index),
+            WeatherDetails(
+              humidity: weather.humidity ?? 0,
+              windSpeed: weather.windSpeed ?? 0,
+              pressure: weather.pressure ?? 0,
+              uvIndex: 0,
+              visibility: 10000,
+            ),
           ],
         ),
       ),

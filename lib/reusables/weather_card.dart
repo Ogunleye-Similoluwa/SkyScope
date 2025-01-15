@@ -5,7 +5,7 @@ import 'package:weather/weather.dart';
 import 'weather_card_content.dart';
 
 class WeatherCard extends StatelessWidget {
-  final Weather weather;
+  final TomorrowWeather weather;
   final bool isCurrentDay;
   final int index;
   final AnimationController animationController;

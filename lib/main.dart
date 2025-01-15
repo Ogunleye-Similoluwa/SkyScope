@@ -4,42 +4,65 @@ import 'package:simple_weather_application/bloc/weather_bloc_bloc.dart';
 import 'package:simple_weather_application/screens/home_screen.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:simple_weather_application/services/weather_service.dart';
 
 Future<void> main() async{
-
+  WidgetsFlutterBinding.ensureInitialized();
+  
   await dotenv.load(fileName: ".env");
- runApp(
-    const MainApp()
-  );
+  final apiKey = dotenv.env['WEATHER_API_KEY'] ?? '';
+  print('API Key: $apiKey');
+  
+  final prefs = await SharedPreferences.getInstance();
+  final weatherService = WeatherService(apiKey);
+
+  runApp(MyApp(
+    prefs: prefs,
+    weatherService: weatherService,
+  ));
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class MyApp extends StatelessWidget {
+  final SharedPreferences prefs;
+  final WeatherService weatherService;
+
+  const MyApp({
+    super.key,
+    required this.prefs,
+    required this.weatherService,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-			debugShowCheckedModeBanner: false,
-      home: FutureBuilder(
-				future: _determinePosition(),
-        builder: (context, snap) {
-					if(snap.hasData) {
-						return BlocProvider<WeatherBlocBloc>(
-							create: (context) => WeatherBlocBloc()..add(
-								FetchWeather(snap.data as Position)
-							),
-							child: const HomeScreen(),
-						);
-					} else {
-						return const Scaffold(
-              backgroundColor: Colors.black,
-							body: Center(
-								child: CircularProgressIndicator(),
-							),
-						);
-					}
-        }
-      )
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => WeatherBlocBloc(
+            weatherService: weatherService,
+            prefs: prefs,
+          ),
+        ),
+        // ... other providers
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: FutureBuilder(
+          future: _determinePosition(),
+          builder: (context, snap) {
+            if(snap.hasData) {
+              return const HomeScreen();
+            } else {
+              return const Scaffold(
+                backgroundColor: Colors.black,
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+          }
+        )
+      ),
     );
   }
 }

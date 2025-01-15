@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class WeatherIcon extends StatelessWidget {
-  final int code;
+  final String code;
 
   const WeatherIcon({
     Key? key,
@@ -10,35 +10,24 @@ class WeatherIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 100,
-      height: 100,
-      child: _getWeatherIcon(code),
+    return Icon(
+      _getWeatherIcon(code),
+      color: Colors.white,
+      size: 32,
     );
   }
 
-  Widget _getWeatherIcon(int code) {
-    String assetPath;
-
-    if (code >= 200 && code < 300) {
-      assetPath = 'assets/1.png';
-    } else if (code >= 300 && code < 400) {
-      assetPath = 'assets/2.png';
-    } else if (code >= 500 && code < 600) {
-      assetPath = 'assets/3.png';
-    } else if (code >= 600 && code < 700) {
-      assetPath = 'assets/4.png';
-    } else if (code >= 700 && code < 800) {
-      assetPath = 'assets/5.png';
-    } else if (code == 800) {
-      assetPath = 'assets/6.png';
-    } else {
-      assetPath = 'assets/7.png';
+  IconData _getWeatherIcon(String code) {
+    switch (code) {
+      case '1000': return Icons.wb_sunny;  // Clear
+      case '1100': return Icons.wb_cloudy;  // Mostly Clear
+      case '1101': return Icons.cloud;      // Partly Cloudy
+      case '1102': return Icons.cloud;      // Mostly Cloudy
+      case '1001': return Icons.cloud;      // Cloudy
+      case '4000': return Icons.grain;      // Rain
+      case '4001': return Icons.beach_access; // Light Rain
+      case '4200': return Icons.ac_unit;    // Snow
+      default: return Icons.wb_sunny;
     }
-
-    return Image.asset(
-      assetPath,
-      fit: BoxFit.scaleDown,
-    );
   }
 }
