@@ -1,78 +1,87 @@
 // components/weather_details.dart
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import '../models/tomorrow_weather.dart';
 
 class WeatherDetails extends StatelessWidget {
-  final TomorrowWeather weather;
-  final int index;
+  final double humidity;
+  final double windSpeed;
+  final double pressure;
+  final double uvIndex;
+  final double visibility;
 
   const WeatherDetails({
     Key? key,
-    required this.weather,
-    required this.index,
+    required this.humidity,
+    required this.windSpeed,
+    required this.pressure,
+    required this.uvIndex,
+    required this.visibility,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Card(
+      margin: const EdgeInsets.all(8.0),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: _buildDetailItem('Humidity', '${weather.humidity}%', 'assets/humidity.jpg'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildDetailItem(
+                  icon: Icons.water_drop,
+                  label: 'Humidity',
+                  value: '$humidity%',
+                ),
+                _buildDetailItem(
+                  icon: Icons.air,
+                  label: 'Wind',
+                  value: '$windSpeed km/h',
+                ),
+              ],
             ),
-            Expanded(
-              child: _buildDetailItem('Wind', '${weather.windSpeed} km/h', 'assets/wind.jpg'),
-            ),
-            Expanded(
-              child: _buildDetailItem('Feels Like', '${weather.feelsLike.round()}°C', 'assets/13.png'),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildDetailItem(
+                  icon: Icons.wb_sunny,
+                  label: 'UV Index',
+                  value: uvIndex.round().toString(),
+                ),
+                _buildDetailItem(
+                  icon: Icons.visibility,
+                  label: 'Visibility',
+                  value: '${visibility.round()}km',
+                ),
+              ],
             ),
           ],
         ),
-        const SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Expanded(
-              child: _buildDetailItem(
-                'UV Index',
-                '${weather.uvIndex.round()}',
-                'assets/11.png'
-              ),
-            ),
-            Expanded(
-              child: _buildDetailItem(
-                'Visibility',
-                '${weather.visibility.round()}km',
-                'assets/12.png'
-              ),
-            ),
-          ],
-        ),
-      ],
+      ),
     );
   }
 
-  Widget _buildDetailItem(String label, String value, String iconPath) {
+  Widget _buildDetailItem({
+    required IconData icon,
+    required String label,
+    required String value,
+  }) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
       children: [
-        Image.asset(iconPath, height: 30),
-        const SizedBox(height: 5),
+        Icon(icon, size: 24),
+        const SizedBox(height: 8),
         Text(
           label,
-          style: const TextStyle(color: Colors.white70),
-          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 12),
         ),
         Text(
           value,
           style: const TextStyle(
-            color: Colors.white,
+            fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
-          textAlign: TextAlign.center,
         ),
       ],
     );

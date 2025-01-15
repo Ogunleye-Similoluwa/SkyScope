@@ -7,8 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'bloc/setting_cubit.dart';
 
-
-Future<void> main() async{
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
   await dotenv.load(fileName: ".env");
@@ -23,8 +22,8 @@ Future<void> main() async{
           create: (context) => WeatherBlocBloc(),
         ),
       ],
-      child: const MainApp()
-    )
+      child: const MainApp(),
+    ),
   );
 }
 
@@ -34,26 +33,25 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-			debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
       home: FutureBuilder(
-				future: _determinePosition(),
+        future: _determinePosition(),
         builder: (context, snap) {
-					if(snap.hasData) {
-						context.read<WeatherBlocBloc>().add(
-							FetchWeather(snap.data as Position)
-						);
-						return const HomeScreen();
-					} else {
-						return const Scaffold(
-              backgroundColor: Colors.black,
-							body: Center(
-								child: CircularProgressIndicator(),
-							),
-						);
-					}
-        }
-      )
+          if (snap.hasData) {
+            context.read<WeatherBlocBloc>().add(
+              FetchWeather(snap.data as Position),
+            );
+            return const HomeScreen();
+          }
+          return const Scaffold(
+            backgroundColor: Colors.black,
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        },
+      ),
     );
   }
 }

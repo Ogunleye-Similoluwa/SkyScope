@@ -1,8 +1,10 @@
-import 'package:bloc/bloc.dart';
+import 'dart:async';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
 import '../services/weather_service.dart';
 import '../models/tomorrow_weather.dart';
+import '../models/weather_alert.dart';
 
 part 'weather_bloc_event.dart';
 part 'weather_bloc_state.dart';
