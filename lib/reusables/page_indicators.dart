@@ -17,7 +17,7 @@ class PageIndicators extends StatelessWidget {
           duration: const Duration(milliseconds: 300),
           margin: const EdgeInsets.symmetric(horizontal: 4),
           height: 8,
-          width: currentPage == index ? 24 : 8,
+          width: currentPage == index ? 20 : 8,
           decoration: BoxDecoration(
             color: currentPage == index ? Colors.white : Colors.white38,
             borderRadius: BorderRadius.circular(4),
