@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 					} else if (state is WeatherBlocLoading) {
 						return const Center(child: CircularProgressIndicator());
 					} else {
-						return const Center(child: Text('Something went wrong!'));
+						return const Center(child: Text('Something went wrong! Please check your internet connection and try again.'));
 					}
 				},
 			),
