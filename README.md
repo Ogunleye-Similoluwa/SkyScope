@@ -33,37 +33,6 @@ A sleek and modern weather application built with Flutter, featuring real-time w
 - **Widget Support**: Home screen weather widget
 - **Settings Persistence**: User preferences saved locally
 
-## 🛠️ Installation
-
-### Prerequisites
-- Flutter SDK (3.0.0 or higher)
-- Dart SDK (2.17.0 or higher)
-- Android Studio / VS Code
-- Tomorrow.io API key
-
-### Setup Steps
-
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/yourusername/weather_app.git
-   cd weather_app
-   ```
-
-2. **Install Dependencies**
-   ```bash
-   flutter pub get
-   ```
-
-3. **Configure API Key**
-   Create a `.env` file in the root directory:
-   ```env
-   API_KEY=your_tomorrow_io_api_key
-   ```
-
-4. **Run the App**
-   ```bash
-   flutter run
-   ```
 
 ## 🏗️ Architecture
 
@@ -78,25 +47,6 @@ The app follows a clean architecture pattern with BLoC for state management:
 - **Local Storage**: shared_preferences
 - **Notifications**: flutter_local_notifications
 
-## 🤝 Contributing
-
-Contributions are welcome! Please read our [Contributing Guidelines](CONTRIBUTING.md) first.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Weather data provided by [Tomorrow.io](https://www.tomorrow.io)
-- Location data from [OpenStreetMap](https://www.openstreetmap.org)
-- Icons from [Material Design Icons](https://material.io/icons)
 
 ## 📱 Download
 
@@ -110,12 +60,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
   </a>
 </p>
 
-## 📞 Support
-
-For support, email your-email@example.com or join our Slack channel.
-
----
-
-<p align="center">
-  Made with ❤️ by [Your Name]
-</p>
