@@ -9,6 +9,10 @@ import '../reusables/weather_card.dart';
 import '../reusables//weather_header.dart';
 import '../reusables//page_indicators.dart';
 import '../reusables/weather_card.dart';
+import '../screens/search_screen.dart';
+import '../screens/detailed_forecast_screen.dart';
+import '../screens/settings_screen.dart';
+import '../widgets/expandable_fab.dart';
 
 class HomeScreen extends StatefulWidget {
 	const HomeScreen({super.key});
@@ -103,6 +107,67 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 					} else {
 						return const Center(child: Text('Something went wrong!'));
 					}
+				},
+			),
+			floatingActionButton: BlocBuilder<WeatherBlocBloc, WeatherBlocState>(
+				builder: (context, state) {
+					if (state is WeatherBlocSuccess) {
+						return ExpandableFab(
+							distance: 112.0,
+							children: [
+								ActionButton(
+									onPressed: () async {
+										final result = await Navigator.push(
+											context,
+											MaterialPageRoute(builder: (context) => SearchScreen()),
+										);
+										if (result != null) {
+											context.read<WeatherBlocBloc>().add(
+												FetchWeather(
+													Position(
+														latitude: result['lat'],
+														longitude: result['lon'],
+														timestamp: DateTime.now(),
+														accuracy: 0,
+														altitude: 0,
+														heading: 0,
+														speed: 0,
+														speedAccuracy: 0,
+														altitudeAccuracy: 0,
+														headingAccuracy: 0,
+													),
+												),
+											);
+										}
+									},
+									icon: Icon(Icons.search),
+								),
+								ActionButton(
+									onPressed: () {
+										Navigator.push(
+											context,
+											MaterialPageRoute(
+												builder: (context) => DetailedForecastScreen(
+													hourlyForecast: state.hourlyForecast,
+												),
+											),
+										);
+									},
+									icon: Icon(Icons.analytics),
+								),
+								ActionButton(
+									onPressed: () {
+										Navigator.push(
+											context,
+											MaterialPageRoute(builder: (context) => SettingsScreen()),
+										);
+									},
+									icon: Icon(Icons.settings),
+								),
+							],
+						);
+					}
+					return Container(); // Return empty container if state is not success
 				},
 			),
 		);

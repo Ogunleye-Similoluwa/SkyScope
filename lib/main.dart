@@ -4,12 +4,23 @@ import 'package:simple_weather_application/bloc/weather_bloc_bloc.dart';
 import 'package:simple_weather_application/screens/home_screen.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'bloc/setting_cubit.dart';
 
 Future<void> main() async{
 
   await dotenv.load(fileName: ".env");
  runApp(
-    const MainApp()
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<SettingsCubit>(
+          create: (context) => SettingsCubit(),
+        ),
+        BlocProvider<WeatherBlocBloc>(
+          create: (context) => WeatherBlocBloc(),
+        ),
+      ],
+      child: const MainApp()
+    )
   );
 }
 
@@ -20,16 +31,15 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
 			debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark(),
       home: FutureBuilder(
 				future: _determinePosition(),
         builder: (context, snap) {
 					if(snap.hasData) {
-						return BlocProvider<WeatherBlocBloc>(
-							create: (context) => WeatherBlocBloc()..add(
-								FetchWeather(snap.data as Position)
-							),
-							child: const HomeScreen(),
+						context.read<WeatherBlocBloc>().add(
+							FetchWeather(snap.data as Position)
 						);
+						return const HomeScreen();
 					} else {
 						return const Scaffold(
               backgroundColor: Colors.black,

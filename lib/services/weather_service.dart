@@ -2,8 +2,52 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../data/api_key.dart';
 import '../models/tomorrow_weather.dart';
+import '../models/weather_alert.dart';
+import '../services/location_service.dart';
 
 class WeatherService {
+  final LocationService _locationService = LocationService();
+
+  Future<String> getLocationName(double lat, double lon) async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+          'https://nominatim.openstreetmap.org/reverse?lat=$lat&lon=$lon&format=json'
+        ),
+        headers: {'Accept': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final address = data['address'];
+        
+        // Create a more concise location string
+        final List<String> locationParts = [];
+        
+        if (address['city'] != null) {
+          locationParts.add(address['city']);
+        } else if (address['town'] != null) {
+          locationParts.add(address['town']);
+        } else if (address['village'] != null) {
+          locationParts.add(address['village']);
+        }
+        
+        if (address['state'] != null) {
+          locationParts.add(address['state']);
+        }
+        
+        if (address['country'] != null) {
+          locationParts.add(address['country']);
+        }
+        
+        return locationParts.join(', ');
+      }
+      return 'Unknown Location';
+    } catch (e) {
+      return 'Unknown Location';
+    }
+  }
+
   Future<Map<String, dynamic>> getWeatherData(double lat, double lon) async {
     try {
       final fields = [
@@ -35,12 +79,14 @@ class WeatherService {
         }
 
         final intervals = data['data']['timelines'][0]['intervals'];
+        final locationName = await getLocationName(lat, lon);
+        
         final current = TomorrowWeather.fromJson(
           {
             ...intervals[0]['values'],
             'time': intervals[0]['startTime'],
           },
-          areaName: 'Current Location',
+          areaName: locationName,
         );
         
         final hourlyData = List<TomorrowWeather>.from(

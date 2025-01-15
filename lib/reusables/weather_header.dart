@@ -14,32 +14,37 @@ class WeatherHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(20),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '📍 $areaName',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.location_on,
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 8),
+                  Text(
+                    areaName,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
-              Text(
-                DateFormat('EEEE, MMMM d').format(DateTime.now()),
-                style: const TextStyle(
-                  color: Colors.white70,
-                ),
-              ),
-            ],
+            ),
           ),
           IconButton(
-            icon: const Icon(Icons.refresh, color: Colors.white),
             onPressed: onRefresh,
+            icon: Icon(
+              Icons.refresh,
+              color: Colors.white,
+            ),
           ),
         ],
       ),
