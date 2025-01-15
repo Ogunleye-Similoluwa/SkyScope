@@ -1,10 +1,10 @@
 // components/weather_details.dart
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:weather/weather.dart';
+import '../models/tomorrow_weather.dart';
 
 class WeatherDetails extends StatelessWidget {
-  final Weather weather;
+  final TomorrowWeather weather;
   final int index;
 
   const WeatherDetails({
@@ -27,7 +27,7 @@ class WeatherDetails extends StatelessWidget {
               child: _buildDetailItem('Wind', '${weather.windSpeed} km/h', 'assets/wind.jpg'),
             ),
             Expanded(
-              child: _buildDetailItem('Feels Like', '${weather.tempFeelsLike!.celsius!.round()}°C', 'assets/13.png'),
+              child: _buildDetailItem('Feels Like', '${weather.feelsLike.round()}°C', 'assets/13.png'),
             ),
           ],
         ),
@@ -37,16 +37,16 @@ class WeatherDetails extends StatelessWidget {
           children: [
             Expanded(
               child: _buildDetailItem(
-                  'Sunrise',
-                  DateFormat('HH:mm').format(weather.sunrise ?? DateTime.now().add(Duration(days: index))),
-                  'assets/11.png'
+                'UV Index',
+                '${weather.uvIndex.round()}',
+                'assets/11.png'
               ),
             ),
             Expanded(
               child: _buildDetailItem(
-                  'Sunset',
-                  DateFormat('HH:mm').format(weather.sunset ?? DateTime.now().add(Duration(days: index))),
-                  'assets/12.png'
+                'Visibility',
+                '${weather.visibility.round()}km',
+                'assets/12.png'
               ),
             ),
           ],

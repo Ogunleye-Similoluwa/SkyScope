@@ -1,6 +1,6 @@
 part of 'weather_bloc_bloc.dart';
 
-class WeatherBlocState extends Equatable {
+abstract class WeatherBlocState extends Equatable {
   const WeatherBlocState();
 
   @override
@@ -14,11 +14,11 @@ class WeatherBlocLoading extends WeatherBlocState {}
 class WeatherBlocFailure extends WeatherBlocState {}
 
 class WeatherBlocSuccess extends WeatherBlocState {
-  final Weather currentWeather;
-  final List<Weather> forecast;
+  final TomorrowWeather currentWeather;
+  final List<TomorrowWeather> hourlyForecast;
 
-  const WeatherBlocSuccess(this.currentWeather, this.forecast);
+  const WeatherBlocSuccess(this.currentWeather, this.hourlyForecast);
 
   @override
-  List<Object> get props => [currentWeather, forecast];
+  List<Object> get props => [currentWeather, hourlyForecast];
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:weather/weather.dart';
+import '../models/tomorrow_weather.dart';
 import 'weather_icon.dart';
 import 'weather_details.dart';
 
 class WeatherCardContent extends StatelessWidget {
-  final Weather weather;
+  final TomorrowWeather weather;
   final bool isCurrentDay;
   final int index;
 
@@ -49,13 +49,13 @@ class WeatherCardContent extends StatelessWidget {
                     ],
                   ),
                 ),
-                WeatherIcon(code: weather.weatherConditionCode!),
+                WeatherIcon(code: weather.weatherCode),
               ],
             ),
             const SizedBox(height: 20),
             Center(
               child: Text(
-                '${weather.temperature!.celsius!.round()}°C',
+                '${weather.temperature.round()}°C',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: isCurrentDay ? 72 : 60,
@@ -65,7 +65,7 @@ class WeatherCardContent extends StatelessWidget {
             ),
             Center(
               child: Text(
-                weather.weatherMain!.toUpperCase(),
+                weather.weatherCode.toString(),
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: isCurrentDay ? 24 : 20,

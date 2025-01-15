@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 										crossAxisAlignment: CrossAxisAlignment.start,
 										children: [
 											WeatherHeader(
-												areaName: state.currentWeather.areaName!,
+												areaName: state.currentWeather.areaName,
 												onRefresh: () async {
 													Position position = await Geolocator
 															.getCurrentPosition();
@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 													},
 													itemCount: 6,
 													itemBuilder: (context, index) {
-														final weathers = state.forecast;
+														final weathers = state.hourlyForecast;
 														final currentWeather = index == 0 ? state
 																.currentWeather : weathers[index];
 														return WeatherCard(
