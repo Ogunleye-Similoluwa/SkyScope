@@ -5,9 +5,8 @@ class TomorrowWeather {
   final double pressure;
   final double uvIndex;
   final double visibility;
-  final String weatherCode;
+  final int weatherCode;
   final DateTime time;
-  final String areaName;
   final double latitude;
   final double longitude;
 
@@ -20,24 +19,22 @@ class TomorrowWeather {
     required this.visibility,
     required this.weatherCode,
     required this.time,
-    this.areaName = '',
-    this.latitude = 0,
-    this.longitude = 0,
+    required this.latitude,
+    required this.longitude,
   });
 
   factory TomorrowWeather.fromJson(Map<String, dynamic> json) {
     return TomorrowWeather(
-      temperature: json['temperature']?.toDouble() ?? 0,
-      humidity: json['humidity']?.toDouble() ?? 0,
-      windSpeed: json['windSpeed']?.toDouble() ?? 0,
-      pressure: json['pressureSurfaceLevel']?.toDouble() ?? 0,
-      uvIndex: json['uvIndex']?.toDouble() ?? 0,
-      visibility: json['visibility']?.toDouble() ?? 0,
-      weatherCode: json['weatherCode']?.toString() ?? '1000',
+      temperature: (json['temperature'] as num).toDouble(),
+      humidity: (json['humidity'] as num).toDouble(),
+      windSpeed: (json['windSpeed'] as num).toDouble(),
+      pressure: (json['pressureSurfaceLevel'] as num).toDouble(),
+      uvIndex: (json['uvIndex'] as num).toDouble(),
+      visibility: (json['visibility'] as num).toDouble(),
+      weatherCode: json['weatherCode'] as int,
       time: DateTime.parse(json['time']),
-      areaName: json['location']?['name']?.toString() ?? '',
-      latitude: json['location']?['lat']?.toDouble() ?? 0,
-      longitude: json['location']?['lon']?.toDouble() ?? 0,
+      latitude: (json['location']?['lat'] as num?)?.toDouble() ?? 0.0,
+      longitude: (json['location']?['lon'] as num?)?.toDouble() ?? 0.0,
     );
   }
 } 

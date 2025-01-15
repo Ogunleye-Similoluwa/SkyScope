@@ -17,17 +17,17 @@ class WeatherCardContent extends StatelessWidget {
     required this.index,
   }) : super(key: key);
 
-  String _getWeatherDescription(String code) {
+  String _getWeatherDescription(int code) {
     switch (code) {
-      case '1000': return 'CLEAR';
-      case '1100': return 'MOSTLY CLEAR';
-      case '1101': return 'PARTLY CLOUDY';
-      case '1102': return 'MOSTLY CLOUDY';
-      case '1001': return 'CLOUDY';
-      case '4000': return 'RAIN';
-      case '4001': return 'LIGHT RAIN';
-      case '4200': return 'SNOW';
-      default: return 'CLEAR';
+      case 1000: return 'Clear';
+      case 1100: return 'Mostly Clear';
+      case 1101: return 'Partly Cloudy';
+      case 1102: return 'Mostly Cloudy';
+      case 1001: return 'Cloudy';
+      case 4000: return 'Rain';
+      case 4001: return 'Light Rain';
+      case 4200: return 'Snow';
+      default: return 'Clear';
     }
   }
 
@@ -89,11 +89,11 @@ class WeatherCardContent extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             WeatherDetails(
-              humidity: weather.humidity ?? 0,
-              windSpeed: weather.windSpeed ?? 0,
-              pressure: weather.pressure ?? 0,
-              uvIndex: 0,
-              visibility: 10000,
+              humidity: weather.humidity,
+              windSpeed: weather.windSpeed,
+              pressure: weather.pressure,
+              uvIndex: weather.uvIndex,
+              visibility: weather.visibility,
             ),
           ],
         ),

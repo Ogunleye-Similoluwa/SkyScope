@@ -10,28 +10,68 @@ class WeatherService {
   }
 
   Future<TomorrowWeather> getCurrentWeather(double lat, double lon) async {
-    final response = await _dio.get(
-      '/weather/realtime',
-      queryParameters: {
-        'apikey': apiKey,
-        'location': '$lat,$lon',
-        'units': 'metric'
-      },
-    );
-    return TomorrowWeather.fromJson(response.data['data']['values']);
+    try {
+      final response = await _dio.get(
+        '/weather/realtime',
+        queryParameters: {
+          'apikey': apiKey,
+          'location': '$lat,$lon',
+          'units': 'metric',
+          'fields': [
+            'temperature',
+            'humidity',
+            'windSpeed',
+            'pressureSurfaceLevel',
+            'uvIndex',
+            'visibility',
+            'weatherCode'
+          ],
+        },
+      );
+
+      final data = response.data['data'];
+      final values = data['values'];
+      values['time'] = data['time'];
+      values['location'] = {'lat': lat, 'lon': lon};
+
+      return TomorrowWeather.fromJson(values);
+    } catch (e) {
+      print('Error in getCurrentWeather: $e');
+      rethrow;
+    }
   }
 
   Future<List<TomorrowWeather>> getForecast(double lat, double lon) async {
-    final response = await _dio.get(
-      '/weather/forecast',
-      queryParameters: {
-        'apikey': apiKey,
-        'location': '$lat,$lon',
-        'units': 'metric'
-      },
-    );
-    
-    final List<dynamic> timelines = response.data['timelines']['daily'];
-    return timelines.map((data) => TomorrowWeather.fromJson(data['values'])).toList();
+    try {
+      final response = await _dio.get(
+        '/weather/forecast',
+        queryParameters: {
+          'apikey': apiKey,
+          'location': '$lat,$lon',
+          'units': 'metric',
+          'timesteps': '1h',
+          'fields': [
+            'temperature',
+            'humidity',
+            'windSpeed',
+            'pressureSurfaceLevel',
+            'uvIndex',
+            'visibility',
+            'weatherCode'
+          ],
+        },
+      );
+
+      final timelines = response.data['timelines']['hourly'] as List;
+      return timelines.map((item) {
+        final values = item['values'];
+        values['time'] = item['time'];
+        values['location'] = {'lat': lat, 'lon': lon};
+        return TomorrowWeather.fromJson(values);
+      }).toList();
+    } catch (e) {
+      print('Error in getForecast: $e');
+      rethrow;
+    }
   }
 } 

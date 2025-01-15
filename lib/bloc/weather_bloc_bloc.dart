@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:simple_weather_application/models/tomorrow_weather.dart';
 import 'package:simple_weather_application/services/weather_service.dart';
 import 'package:weather/weather.dart';
 import 'package:shared_preferences/shared_preferences.dart';

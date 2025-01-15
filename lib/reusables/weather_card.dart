@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:simple_weather_application/models/tomorrow_weather.dart';
 import 'package:simple_weather_application/reusables/weather_chart.dart';
 import 'package:weather/weather.dart';
 import 'weather_card_content.dart';

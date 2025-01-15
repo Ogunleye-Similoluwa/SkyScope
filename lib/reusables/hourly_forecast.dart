@@ -68,35 +68,39 @@ class HourlyForecast extends StatelessWidget {
     );
   }
 
-  IconData _getWeatherIcon(String iconCode) {
-    switch (iconCode) {
-      case '01d':
+  IconData _getWeatherIcon(int weatherCode) {
+    // Tomorrow.io weather codes
+    switch (weatherCode) {
+      case 1000: // Clear, Sunny
         return Icons.wb_sunny;
-      case '01n':
-        return Icons.nights_stay;
-      case '02d':
-      case '02n':
+      case 1100: // Mostly Clear
+      case 1101: // Partly Cloudy
+        return Icons.wb_cloudy;
+      case 1102: // Mostly Cloudy
+      case 1001: // Cloudy
         return Icons.cloud;
-      case '03d':
-      case '03n':
-      case '04d':
-      case '04n':
-        return Icons.cloud_queue;
-      case '09d':
-      case '09n':
+      case 4000: // Drizzle
+      case 4001: // Rain
         return Icons.grain;
-      case '10d':
-      case '10n':
+      case 4200: // Light Rain
+      case 4201: // Heavy Rain
         return Icons.beach_access;
-      case '11d':
-      case '11n':
-        return Icons.flash_on;
-      case '13d':
-      case '13n':
+      case 5000: // Snow
+      case 5001: // Flurries
+      case 5100: // Light Snow
+      case 5101: // Heavy Snow
         return Icons.ac_unit;
-      case '50d':
-      case '50n':
-        return Icons.blur_on;
+      case 6000: // Freezing Drizzle
+      case 6001: // Freezing Rain
+      case 6200: // Light Freezing Rain
+      case 6201: // Heavy Freezing Rain
+        return Icons.ac_unit;
+      case 7000: // Ice Pellets
+      case 7101: // Heavy Ice Pellets
+      case 7102: // Light Ice Pellets
+        return Icons.ac_unit;
+      case 8000: // Thunderstorm
+        return Icons.flash_on;
       default:
         return Icons.wb_sunny;
     }
