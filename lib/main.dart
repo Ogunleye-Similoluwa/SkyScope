@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_weather_application/bloc/weather_bloc_bloc.dart';
 import 'package:simple_weather_application/screens/home_screen.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'bloc/setting_cubit.dart';
 
-Future<void> main() async{
 
+Future<void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
   await dotenv.load(fileName: ".env");
- runApp(
+  
+  runApp(
     MultiBlocProvider(
       providers: [
         BlocProvider<SettingsCubit>(
-          create: (context) => SettingsCubit(),
+          create: (context) => SettingsCubit(prefs),
         ),
         BlocProvider<WeatherBlocBloc>(
           create: (context) => WeatherBlocBloc(),
