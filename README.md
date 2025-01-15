@@ -1,14 +1,5 @@
 # Modern Weather App 🌦️
 
-<p align="center">
-  <img src="screenshots/app_icon.png" width="100" alt="App Icon"/>
-</p>
-
-<p align="center">
-  <a href="https://flutter.dev"><img src="https://img.shields.io/badge/Flutter-3.0.0-blue.svg" alt="Flutter"></a>
-  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="License: MIT"></a>
-  <a href="https://github.com/yourusername/weather_app/stargazers"><img src="https://img.shields.io/github/stars/yourusername/weather_app" alt="GitHub stars"></a>
-</p>
 
 A sleek and modern weather application built with Flutter, featuring real-time weather updates, interactive charts, and a beautiful user interface. Get accurate weather forecasts with just a tap!
 
