@@ -1,4 +1,4 @@
-# Modern Weather App 🌦️
+# SkyScope 🌦️
 
 
 A sleek and modern weather application built with Flutter, featuring real-time weather updates, interactive charts, and a beautiful user interface. Get accurate weather forecasts with just a tap!
